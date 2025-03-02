@@ -3,7 +3,6 @@ package com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.componen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -14,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.model.Book
-import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListAction
 
 @Composable
 fun BookList(

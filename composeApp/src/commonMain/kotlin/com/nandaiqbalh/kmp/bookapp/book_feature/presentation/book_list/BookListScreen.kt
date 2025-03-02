@@ -1,3 +1,5 @@
+@file:OptIn(FlowPreview::class)
+
 package com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list
 
 import androidx.compose.foundation.background
@@ -44,6 +46,7 @@ import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.component
 import com.nandaiqbalh.kmp.bookapp.core.presentation.DarkBlue
 import com.nandaiqbalh.kmp.bookapp.core.presentation.DesertWhite
 import com.nandaiqbalh.kmp.bookapp.core.presentation.SandYellow
+import kotlinx.coroutines.FlowPreview
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -90,15 +93,18 @@ fun BookListScreen(
 	onAction: (BookListAction) -> Unit,
 ) {
 
+	// defining state or useful variable
 	val keyboardController = LocalSoftwareKeyboardController.current
 	val pagerState = rememberPagerState { 2 }
 	val searchLazyListState = rememberLazyListState()
 	val favoriteLazyListState = rememberLazyListState()
 
+	// detect search result state changes, if changes it force lazy column to scroll to first item
 	LaunchedEffect(state.searchResults){
 		searchLazyListState.animateScrollToItem(0)
 	}
 
+	// detect selected tab index changes to scroll pager
 	LaunchedEffect(state.selectedTabIndex){
 		pagerState.animateScrollToPage(state.selectedTabIndex)
 	}
@@ -107,6 +113,7 @@ fun BookListScreen(
 		onAction(BookListAction.OnTabSelected(pagerState.currentPage))
 	}
 
+	// main component
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -114,6 +121,8 @@ fun BookListScreen(
 			.statusBarsPadding(),
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
+
+		// search bar
 		BookSearchBar(
 			searchQuery = state.searchQuery,
 			onSearchQueryChange = {
@@ -128,6 +137,7 @@ fun BookListScreen(
 				.padding(16.dp)
 		)
 
+		// surface
 		Surface(
 			modifier = Modifier
 				.weight(1f)
@@ -139,9 +149,12 @@ fun BookListScreen(
 			)
 		){
 
+			// column for tab row and horizontal pager
 			Column(
 				horizontalAlignment = Alignment.CenterHorizontally
 			){
+
+				// tab row (currently have two tab)
 				TabRow(
 					selectedTabIndex = state.selectedTabIndex,
 					modifier = Modifier
@@ -156,6 +169,8 @@ fun BookListScreen(
 						)
 					}
 				){
+
+					// first tab: search result tab
 					Tab(
 						selected = state.selectedTabIndex == 0,
 						onClick = {
@@ -171,6 +186,7 @@ fun BookListScreen(
 						)
 					}
 
+					// second tab: favorites tab
 					Tab(
 						selected = state.selectedTabIndex == 1,
 						onClick = {
@@ -189,6 +205,7 @@ fun BookListScreen(
 
 				Spacer(modifier = Modifier.height(4.dp))
 
+				// horizontal pager
 				HorizontalPager(
 					state = pagerState,
 					modifier = Modifier
@@ -204,6 +221,8 @@ fun BookListScreen(
 
 						when(pageIndex){
 							0 -> {
+
+								// show content of list based on conditions
 								if (state.isLoading){
 									CircularProgressIndicator()
 								} else {
