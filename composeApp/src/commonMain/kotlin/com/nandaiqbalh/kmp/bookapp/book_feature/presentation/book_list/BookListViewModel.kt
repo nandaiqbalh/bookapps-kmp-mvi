@@ -2,7 +2,6 @@ package com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.model.Book
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.repository.BookRepository
 import com.nandaiqbalh.kmp.bookapp.core.domain.onError
