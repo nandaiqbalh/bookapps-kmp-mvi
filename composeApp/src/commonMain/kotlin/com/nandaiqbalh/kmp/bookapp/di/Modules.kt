@@ -6,6 +6,7 @@ import com.nandaiqbalh.kmp.bookapp.book_feature.data.network.KtorRemoteBookDataS
 import com.nandaiqbalh.kmp.bookapp.book_feature.data.network.RemoteBookDataSource
 import com.nandaiqbalh.kmp.bookapp.book_feature.data.repository.BookRepositoryImpl
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.repository.BookRepository
+import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.SelectedBookViewModel
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListViewModel
 import com.nandaiqbalh.kmp.bookapp.core.data.HttpClientFactory
 import kotlinx.coroutines.FlowPreview
@@ -28,5 +29,6 @@ val sharedModule = module {
 	singleOf(::BookRepositoryImpl).bind<BookRepository>()
 
 	viewModelOf(::BookListViewModel)
+	viewModelOf(::SelectedBookViewModel)
 
 }

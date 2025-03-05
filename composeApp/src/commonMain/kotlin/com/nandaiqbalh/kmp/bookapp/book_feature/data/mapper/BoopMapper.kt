@@ -5,7 +5,7 @@ import com.nandaiqbalh.kmp.bookapp.book_feature.domain.model.Book
 
 fun SearchBookDto.toBook(): Book {
 	return Book(
-		id = id,
+		id = id.substringAfterLast("/"),
 		title = title,
 		imageUrl = if (coverKey != null) "https://covers.openlibrary.org/b/olid/$coverKey-L.jpg" else "https://covers.openlibrary.org/b/olid/$coverAlternativeKey-L.jpg",
 		authors = authorNames ?: emptyList(),
