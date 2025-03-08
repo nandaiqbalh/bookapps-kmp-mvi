@@ -1,8 +1,7 @@
 package com.nandaiqbalh.kmp.bookapp.book_feature.data.network
 
-import com.nandaiqbalh.kmp.bookapp.book_feature.data.dto.SearchBookDto
+import com.nandaiqbalh.kmp.bookapp.book_feature.data.dto.BookWorkDto
 import com.nandaiqbalh.kmp.bookapp.book_feature.data.dto.SearchResponseDto
-import com.nandaiqbalh.kmp.bookapp.book_feature.domain.model.Book
 import com.nandaiqbalh.kmp.bookapp.core.data.safeCall
 import com.nandaiqbalh.kmp.bookapp.core.domain.DataError
 import com.nandaiqbalh.kmp.bookapp.core.domain.Result
@@ -20,7 +19,7 @@ class KtorRemoteBookDataSource(
 		query: String,
 		resultLimit: Int?,
 	): Result<SearchResponseDto, DataError.Remote> {
-		return safeCall {
+		return safeCall<SearchResponseDto> {
 			httpClient.get(
 				urlString = "$BASE_URL/search.json"
 			){
@@ -32,6 +31,14 @@ class KtorRemoteBookDataSource(
 							"first_publish_year,ratings_average,ratings_count,number_of_pages_median,edition_count"
 				) // Include only fields from SearchBookDto
 			}
+		}
+	}
+
+	override suspend fun getBookDetail(bookWorkId: String): Result<BookWorkDto, DataError.Remote> {
+		return safeCall<BookWorkDto> {
+			httpClient.get(
+				urlString = "$BASE_URL/works/$bookWorkId.json"
+			)
 		}
 	}
 }

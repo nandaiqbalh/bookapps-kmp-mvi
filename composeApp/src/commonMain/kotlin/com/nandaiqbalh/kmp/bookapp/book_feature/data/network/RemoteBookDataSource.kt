@@ -1,5 +1,6 @@
 package com.nandaiqbalh.kmp.bookapp.book_feature.data.network
 
+import com.nandaiqbalh.kmp.bookapp.book_feature.data.dto.BookWorkDto
 import com.nandaiqbalh.kmp.bookapp.book_feature.data.dto.SearchResponseDto
 import com.nandaiqbalh.kmp.bookapp.core.domain.DataError
 import com.nandaiqbalh.kmp.bookapp.core.domain.Result
@@ -10,4 +11,6 @@ interface RemoteBookDataSource {
 		query: String,
 		resultLimit: Int? = null
 	): Result<SearchResponseDto, DataError.Remote>
+
+	suspend fun getBookDetail(bookWorkId: String): Result<BookWorkDto, DataError.Remote>
 }
