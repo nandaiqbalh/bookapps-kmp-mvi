@@ -1,5 +1,6 @@
 package com.nandaiqbalh.kmp.bookapp.book_feature.data.mapper
 
+import com.nandaiqbalh.kmp.bookapp.book_feature.data.database.BookEntity
 import com.nandaiqbalh.kmp.bookapp.book_feature.data.dto.SearchBookDto
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.model.Book
 
@@ -16,5 +17,21 @@ fun SearchBookDto.toBook(): Book {
 		ratingCount = ratingsCount,
 		numPages = numPagesMedian,
 		numEditions = numEditions ?: 0
+	)
+}
+
+fun Book.toBookEntity(): BookEntity{
+	return BookEntity(
+		id = id.substringAfterLast("/"),
+		title = title,
+		imageUrl = imageUrl,
+		authors = authors,
+		languages = languages,
+		description = description,
+		firstPublishYear = firstPublishYear.toString(),
+		ratingsAverage = averageRating,
+		ratingsCount = ratingCount,
+		numPagesMedian = numPages,
+		numEditions = numEditions
 	)
 }
