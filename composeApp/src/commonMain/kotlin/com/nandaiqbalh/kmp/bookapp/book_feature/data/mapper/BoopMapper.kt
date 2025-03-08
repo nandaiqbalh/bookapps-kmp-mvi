@@ -22,7 +22,7 @@ fun SearchBookDto.toBook(): Book {
 
 fun Book.toBookEntity(): BookEntity{
 	return BookEntity(
-		id = id.substringAfterLast("/"),
+		id = id,
 		title = title,
 		imageUrl = imageUrl,
 		authors = authors,
@@ -32,6 +32,22 @@ fun Book.toBookEntity(): BookEntity{
 		ratingsAverage = averageRating,
 		ratingsCount = ratingCount,
 		numPagesMedian = numPages,
+		numEditions = numEditions
+	)
+}
+
+fun BookEntity.toBook(): Book{
+	return Book(
+		id = id,
+		title = title,
+		imageUrl = imageUrl,
+		authors = authors,
+		languages = languages,
+		description = description,
+		firstPublishYear = firstPublishYear.toString(),
+		averageRating = ratingsAverage,
+		ratingCount = ratingsCount,
+		numPages = numPagesMedian,
 		numEditions = numEditions
 	)
 }

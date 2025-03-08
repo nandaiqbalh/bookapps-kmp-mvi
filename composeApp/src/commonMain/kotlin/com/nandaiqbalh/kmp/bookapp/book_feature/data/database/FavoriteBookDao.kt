@@ -18,6 +18,6 @@ interface FavoriteBookDao{
 	suspend fun getFavoriteBook(id: String): BookEntity?
 
 	@Query("DELETE FROM BookEntity WHERE id = :id")
-	suspend fun deleteFavoriteBook(id: String): BookEntity?
+	suspend fun deleteFavoriteBook(id: String)
 
 }
