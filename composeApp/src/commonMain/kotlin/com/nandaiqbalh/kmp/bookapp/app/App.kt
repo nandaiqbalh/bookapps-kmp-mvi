@@ -2,6 +2,8 @@
 
 package com.nandaiqbalh.kmp.bookapp.app
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,7 +43,10 @@ fun App() {
 			) {
 
 				// composable for book list screen
-				composable<Route.BookList> {entry ->
+				composable<Route.BookList>(
+					exitTransition = { slideOutHorizontally() },
+					popEnterTransition = { slideInHorizontally() }
+				) {entry ->
 					val viewModel = koinViewModel<BookListViewModel>()
 
 					// shared view model
@@ -66,7 +71,18 @@ fun App() {
 				}
 
 				// composable for book detail screen
-				composable<Route.BookDetail> { entry ->
+				composable<Route.BookDetail>(
+					enterTransition = {
+						slideInHorizontally { initialOffset ->
+							initialOffset
+						}
+					},
+					exitTransition = {
+						slideOutHorizontally { initialOffset ->
+							initialOffset
+						}
+					}
+				) { entry ->
 
 					// shared view model
 					val selectedBookViewModel =
