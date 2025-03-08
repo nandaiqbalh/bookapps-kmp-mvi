@@ -2,16 +2,11 @@
 
 package com.nandaiqbalh.kmp.bookapp.app
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
@@ -21,6 +16,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.SelectedBookViewModel
+import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDetailAction
+import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDetailScreenRoot
+import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDetailViewModel
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListScreenRoot
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListViewModel
 import kotlinx.coroutines.FlowPreview
@@ -76,15 +74,20 @@ fun App() {
 
 					val selectedBook by selectedBookViewModel.selectedBook.collectAsStateWithLifecycle()
 
-					Box(
-						modifier = Modifier
-							.fillMaxSize(),
-						contentAlignment = Alignment.Center
-					) {
-						Text(
-							"Hello, World! The book is $selectedBook"
-						)
+					val viewModel = koinViewModel<BookDetailViewModel>()
+
+					LaunchedEffect(selectedBook){
+						selectedBook?.let {
+							viewModel.onAction(BookDetailAction.OnSelectedBookChange(it))
+						}
 					}
+
+					BookDetailScreenRoot(
+						viewModel = viewModel,
+						onBackClick = {
+							navController.navigateUp()
+						}
+					)
 				}
 			}
 		}
