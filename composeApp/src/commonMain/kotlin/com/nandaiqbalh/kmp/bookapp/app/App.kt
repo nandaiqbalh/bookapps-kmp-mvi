@@ -2,6 +2,8 @@
 
 package com.nandaiqbalh.kmp.bookapp.app
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +25,8 @@ import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDet
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDetailViewModel
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListScreenRoot
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListViewModel
+import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.splashscreen.SplashScreenRoot
+import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.splashscreen.SplashscreenViewModel
 import kotlinx.coroutines.FlowPreview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -35,8 +39,27 @@ fun App() {
 
 		NavHost(
 			navController = navController,
-			startDestination = Route.BookGraph
+			startDestination = Route.Splashscreen
 		) {
+
+			// composable for book list screen
+			composable<Route.Splashscreen>(
+				exitTransition = { fadeOut(animationSpec = tween(500)) },
+			) { entry ->
+				val viewModel = koinViewModel<SplashscreenViewModel>()
+
+				SplashScreenRoot(
+					viewModel = viewModel,
+					onCompleteSplash = { isComplete ->
+						if (isComplete) {
+							navController.navigate(Route.BookGraph) {
+								popUpTo(Route.Splashscreen) { inclusive = true }
+							}
+						}
+					}
+				)
+			}
+
 
 			navigation<Route.BookGraph>(
 				startDestination = Route.BookList

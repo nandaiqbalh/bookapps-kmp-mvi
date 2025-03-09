@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 sealed interface Route{
 
 	@Serializable
+	data object Splashscreen: Route
+
+	@Serializable
 	data object BookGraph: Route
 
 	@Serializable
