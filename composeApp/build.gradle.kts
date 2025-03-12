@@ -121,7 +121,8 @@ android {
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
+    implementation(libs.androidx.animation.core.android)
+	debugImplementation(compose.uiTooling)
 }
 
 compose.desktop {

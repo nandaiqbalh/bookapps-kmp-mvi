@@ -25,6 +25,7 @@ sqlite = "2.5.0-alpha11"
 room = "2.7.0-alpha11"
 compottie="2.0.0-rc04"
 datastore = "1.1.1"
+animationCoreAndroid = "1.7.8"
 
 
 [libraries]
@@ -74,6 +75,7 @@ compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref
 
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animationCoreAndroid" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

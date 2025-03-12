@@ -3,12 +3,14 @@
 package com.nandaiqbalh.kmp.bookapp.app
 
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
@@ -25,6 +27,9 @@ import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDet
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDetailViewModel
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListScreenRoot
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListViewModel
+import com.nandaiqbalh.kmp.bookapp.core.utils.PreferenceKey
+import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.onboarding.OnboardingScreenRoot
+import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.onboarding.OnboardingViewModel
 import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.splashscreen.SplashScreenRoot
 import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.splashscreen.SplashscreenViewModel
 import kotlinx.coroutines.FlowPreview
@@ -45,24 +50,59 @@ fun App() {
 			// composable for book list screen
 			composable<Route.Splashscreen>(
 				exitTransition = { fadeOut(animationSpec = tween(500)) },
-			) { entry ->
+			) {
 				val viewModel = koinViewModel<SplashscreenViewModel>()
+
+				val isFirstInstall by viewModel.preferencesRepository
+					.getBoolean(PreferenceKey.IS_FIRST_INSTALL, true)
+					.collectAsState(true)
 
 				SplashScreenRoot(
 					viewModel = viewModel,
 					onCompleteSplash = { isComplete ->
 						if (isComplete) {
-							navController.navigate(Route.BookGraph) {
-								popUpTo(Route.Splashscreen) { inclusive = true }
+							if (isFirstInstall){
+								// navigate to on boarding
+								navController.navigate(Route.Onboarding) {
+									popUpTo(Route.Splashscreen) { inclusive = true }
+								}
+							} else {
+								// navigate to home
+								navController.navigate(Route.BookGraph) {
+									popUpTo(Route.Splashscreen) { inclusive = true }
+								}
 							}
 						}
 					}
 				)
 			}
 
+			// composable for book list screen
+			composable<Route.Onboarding>(
+				enterTransition = { fadeIn(animationSpec = tween(1000)) },
+				exitTransition = { fadeOut() }
+			) {
+				val viewModel = koinViewModel<OnboardingViewModel>()
+
+				OnboardingScreenRoot(
+					viewModel = viewModel,
+					onComplete = {
+						navController.navigate(
+							Route.BookGraph
+						)
+					},
+					onSkip = {
+						navController.navigate(
+							Route.BookGraph
+						)
+					}
+				)
+			}
+
 
 			navigation<Route.BookGraph>(
-				startDestination = Route.BookList
+				startDestination = Route.BookList,
+				enterTransition = { fadeIn() }
 			) {
 
 				// composable for book list screen

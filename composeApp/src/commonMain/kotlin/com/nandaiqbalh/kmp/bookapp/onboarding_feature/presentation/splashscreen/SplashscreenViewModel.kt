@@ -1,13 +1,11 @@
 package com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.splashscreen
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.nandaiqbalh.kmp.bookapp.core.domain.PreferencesRepository
 
-class SplashscreenViewModel : ViewModel() {
-
-	private val _state = MutableStateFlow(SplashscreenState())
-	val state: StateFlow<SplashscreenState> = _state
+class SplashscreenViewModel(
+	val preferencesRepository: PreferencesRepository
+) : ViewModel() {
 
 	fun onAction(action: SplashscreenAction) {
 		when (action) {

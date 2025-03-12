@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <resources>
+
+    <string name="app_name">Booky</string>
+    <string name="title_ob_1">Search. Discover. Read.</string>
+    <string name="title_ob_2">Save Your Favorites</string>
+    <string name="title_ob_3">Begin Your Journey</string>
+
+    <string name="desc_ob_1">Find books by searching titles, authors, or genres. Explore new stories and uncover hidden gems that match your interests.</string>
+    <string name="desc_ob_2">Keep track of books you love by adding them to your collection. Organize your reads and return anytime.</string>
+    <string name="desc_ob_3">Search, save, and enjoy books effortlessly. Start exploring now and dive into a world of stories!</string>
+
+    <string name="btn_next">Next</string>
+    <string name="btn_previous">Previous</string>
+    <string name="btn_skip">Skip</string>
+    <string name="btn_get_started">Get Started</string>
+
     <string name="search_hint">Search</string>
     <string name="close_hint">Clear search</string>
 

@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.model.Book
 import com.nandaiqbalh.kmp.bookapp.book_feature.domain.repository.BookRepository
+import com.nandaiqbalh.kmp.bookapp.core.domain.PreferencesRepository
 import com.nandaiqbalh.kmp.bookapp.core.domain.onError
 import com.nandaiqbalh.kmp.bookapp.core.domain.onSuccess
 import com.nandaiqbalh.kmp.bookapp.core.domain.toUiText
+import com.nandaiqbalh.kmp.bookapp.core.utils.PreferenceKey
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +25,8 @@ import kotlinx.coroutines.launch
 
 @FlowPreview
 class BookListViewModel(
-	private val bookRepository: BookRepository
+	private val bookRepository: BookRepository,
+	private val preferencesRepository: PreferencesRepository
 ): ViewModel() {
 
 	private val cachedBooks = emptyList<Book>()
@@ -60,6 +63,16 @@ class BookListViewModel(
 			is BookListAction.OnTabSelected -> {
 				_state.update { it.copy(selectedTabIndex = action.index) }
 			}
+		}
+	}
+
+	init {
+		setFirstInstall()
+	}
+
+	private fun setFirstInstall(){
+		viewModelScope.launch {
+			preferencesRepository.saveBoolean(PreferenceKey.IS_FIRST_INSTALL, false)
 		}
 	}
 

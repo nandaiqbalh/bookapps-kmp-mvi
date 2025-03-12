@@ -13,6 +13,7 @@ import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.SelectedBookViewMod
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_detail.BookDetailViewModel
 import com.nandaiqbalh.kmp.bookapp.book_feature.presentation.book_list.BookListViewModel
 import com.nandaiqbalh.kmp.bookapp.core.data.HttpClientFactory
+import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.onboarding.OnboardingViewModel
 import com.nandaiqbalh.kmp.bookapp.onboarding_feature.presentation.splashscreen.SplashscreenViewModel
 import kotlinx.coroutines.FlowPreview
 import org.koin.core.module.Module
@@ -47,5 +48,6 @@ val sharedModule = module {
 	viewModelOf(::BookListViewModel)
 	viewModelOf(::BookDetailViewModel)
 	viewModelOf(::SelectedBookViewModel)
+	viewModelOf(::OnboardingViewModel)
 
 }
